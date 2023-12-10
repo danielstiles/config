@@ -1,0 +1,31 @@
+#!/bin/bash
+# Helper function to add to the PATH if a directory isn't already there
+pathadd () {
+    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        PATH="${PATH:+"$PATH:"}$1"
+    fi
+}
+
+# Suppress accessibility warning
+export NO_AT_BRIDGE=1
+
+# Set up go env
+pathadd ~/go/bin
+pathadd /usr/local/go/bin
+export GOPRIVATE=github.com/danielstiles
+alias grepnv="grep -rn --exclude-dir=vendor"
+
+# Set up java env
+pathadd ~/java/bin
+export JAVA_HOME=~/java
+
+# Emacs aliases while running an emacs server
+alias es="command emacs"
+alias emacs="emacsclient -n"
+sudoemacs () {
+    emacsclient -n /sudo::$1
+}
+
+# Set up keychain and GPG signing
+eval $(keychain -q --noask --eval id_rsa)
+export GPG_TTY=$(tty)

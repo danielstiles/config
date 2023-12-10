@@ -1,0 +1,11 @@
+[credential]
+	helper = /usr/local/bin/git-credential-manager
+	credentialStore = gpg
+[user]
+	name = Daniel Stiles
+	email = 22626981+danielstiles@users.noreply.github.com
+	signingkey = 
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+[commit]
+	gpgsign = true
