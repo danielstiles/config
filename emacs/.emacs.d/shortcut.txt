@@ -1,0 +1,1 @@
+C:\Windows\System32\wscript.exe "C:\Users\monke\Documents\runhidden.vbs" "wsl -d Ubuntu /home/dstiles/.emacs.d/start_emacs.bash"

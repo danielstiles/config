@@ -2,7 +2,7 @@
 
 GCM_VERSION=$1
 if [ -z $GCM_VERSION ]; then
-    GCM_VERSION="2.4.1"
+    GCM_VERSION="2.5.1"
 fi
 
 sudo apt-get update

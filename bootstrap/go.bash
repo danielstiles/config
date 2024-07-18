@@ -2,7 +2,7 @@
 
 GO_VERSION=$1
 if [ -z $GO_VERSION ]; then
-    GO_VERSION="1.21.5"
+    GO_VERSION="1.22.5"
 fi
 
 if [ ! -d /usr/local/go ]; then
