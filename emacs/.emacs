@@ -3,7 +3,7 @@
 ;;; Commentary:
 ;;; Customization file for Emacs
 ;;; Code:
-(set-face-attribute 'default nil :height 200) ; 20pt font
+(set-face-attribute 'default nil :font "Cascadia Code" :height 160) ; 16pt font
 (setq frame-resize-pixelwise t)
 (add-to-list'initial-frame-alist '(fullscreen . maximized)) ; maximize on startup
 (setq inhibit-startup-buffer-menu t) ; when opening many files, just show one
@@ -209,8 +209,6 @@ Returns list of buffers killed."
   (flycheck-check-syntax-automatically flycheck-default-check) ; set up automatic checks
   :init
   (global-flycheck-mode) ; enable flycheck everywhere
-  :bind
-  ("C-c l" . flycheck-list-errors) ; easier list errors shortcut
   :functions flycheck-buffer
   :config
   (declare-function flycheck-error-format-message-and-id "flycheck")
@@ -294,6 +292,28 @@ Returns list of buffers killed."
   (setq company-idle-delay 0.5) ; wait a bit before displaying suggestions
   (setq company-minimum-prefix-length 1) ; start dislaying suggestions after only a single character is typed
   (setq company-tooltip-align-annotations t)) ; align annotations to the right tooltip border
+
+(use-package treemacs
+  :ensure t
+  :defer t
+  :bind
+  (:map global-map
+        ("M-0"       . treemacs-select-window)
+        ("C-x t 1"   . treemacs-delete-other-windows)
+        ("C-x t t"   . treemacs)
+        ("C-x t d"   . treemacs-select-directory)
+        ("C-x t B"   . treemacs-bookmark)
+        ("C-x t C-t" . treemacs-find-file)
+        ("C-x t M-t" . treemacs-find-tag))
+  (:map term-raw-map
+        ("C-c t t"   . treemacs)))
+
+(use-package lsp-treemacs
+  :after lsp-mode
+  :bind
+  ("C-c l" . lsp-treemacs-errors-list) ; easier list errors shortcut
+  :hook
+  (lsp-mode . lsp-treemacs-sync-mode))
 
 (provide '.emacs)
 ;;; .emacs ends here

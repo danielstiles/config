@@ -1,19 +1,17 @@
 #!/bin/bash
 
 GO_VERSION=$1
-if [ -z $GO_VERSION ]; then
-    GO_VERSION="1.22.5"
+if [[ -z $GO_VERSION ]]; then
+    GO_VERSION="1.25.5"
 fi
 
-if [ ! -d /usr/local/go ]; then
+if [[ ! -d /usr/local/go ]] || [[ $(go version | grep -oE '[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+') != $GO_VERSION ]]; then
+    sudo rm -rf /usr/local/go
     wget -c https://go.dev/dl/go$GO_VERSION.linux-amd64.tar.gz -O - | sudo tar -xz -C /usr/local
+else
+    echo "Already at version " $(go version | grep -oE '[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+')
 fi
 
-# reload config to get path set up
-source ~/.bash_local
-pathadd ~/go/bin
-pathadd /usr/local/go/bin
+# refresh gopls install
+/usr/local/go/bin/go install golang.org/x/tools/gopls@latest
 
-if [ ! -e ~/go/bin/gopls ]; then
-    go install golang.org/x/tools/gopls@latest
-fi
